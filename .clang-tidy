@@ -1,0 +1,18 @@
+---
+Checks: >
+  bugprone-*,
+  performance-*,
+  readability-*,
+  modernize-*,
+  cppcoreguidelines-*,
+  portability-*,
+  misc-*,
+  -modernize-use-trailing-return-type,  # Disable trailing return type enforcement
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic  # Allow pointer arithmetic
+
+WarningsAsErrors: bugprone-*  # Treat bugprone warnings as errors
+
+HeaderFilterRegex: '.*'  # Apply checks to all headers
+AnalyzeTemporaryDtors: false  # Don't analyze temporary destructors
+FormatStyle: LLVM  # Match with clang-format style
+

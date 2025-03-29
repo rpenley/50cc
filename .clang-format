@@ -1,0 +1,29 @@
+BasedOnStyle: LLVM # seems the most commonly used
+IndentWidth: 4  # use 4 instead of LLVM default of 2
+ColumnLimit: 0  # no enforced line wrapping
+UseTab: Never   # spaces over tabs
+
+# enforce the one true brace
+BreakBeforeBraces: Attach
+BraceWrapping:
+  AfterFunction: false
+  AfterClass: false
+  AfterNamespace: false
+  AfterControlStatement: false
+  AfterEnum: false
+  BeforeCatch: false
+  BeforeElse: false
+
+# pet peaves
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
+AllowShortBlocksOnASingleLine: false
+IndentCaseLabels: true
+
+# pointer stuff
+PointerAlignment: Left
+ReferenceAlignment: Left
+
+# namespace stuff
+NamespaceIndentation: Inner
+

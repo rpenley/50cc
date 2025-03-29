@@ -1,0 +1,39 @@
+CompileFlags:
+  Add: [
+    -Wall,
+    -Wextra,
+    -x,
+    c,  # Explicitly tell clang this is C code
+    -std=c11,
+    -I/usr/local/include,
+    -I/opt/homebrew/include,  # For macOS with Homebrew on Apple Silicon
+    -I/usr/local/opt/sdl3/include,  # For macOS Homebrew on Intel
+    -I/opt/homebrew/opt/sdl3/include,  # For macOS Homebrew on Apple Silicon
+    -I/usr/include,
+    -I/usr/local/include/SDL3,
+    -I/opt/homebrew/include/SDL3,
+    -I/usr/local/Cellar/sdl3/*/include,  # For Homebrew Cellar path (Intel)
+    -I/opt/homebrew/Cellar/sdl3/*/include,  # For Homebrew Cellar path (Apple Silicon)
+    -I${workspaceFolder}
+  ]
+
+Diagnostics:
+  ClangTidy:
+    Add: [
+      performance-*,
+      bugprone-*,
+      portability-*,
+      readability-*
+    ]
+    Remove: [
+      readability-magic-numbers
+    ]
+  UnusedIncludes: Strict
+
+InlayHints:
+  Enabled: Yes
+  ParameterNames: Yes
+  DeducedTypes: Yes
+
+Hover:
+  ShowAKA: Yes

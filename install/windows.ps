@@ -1,0 +1,47 @@
+# Ensure PowerShell script is running with administrative privileges
+$CurrentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+$Principal = New-Object System.Security.Principal.WindowsPrincipal($CurrentUser)
+if (-not $Principal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Host "This script must be run as Administrator!" -ForegroundColor Red
+    exit
+}
+
+# Define vcpkg directory
+$vcpkgDir = "C:\vcpkg"
+
+# Step 1: Install vcpkg (if not already installed)
+if (-Not (Test-Path -Path $vcpkgDir)) {
+    Write-Host "Cloning vcpkg repository..." -ForegroundColor Green
+
+    # Install Git if it is not installed
+    if (-Not (Get-Command git -ErrorAction SilentlyContinue)) {
+        Write-Host "Git not found, installing Git..."
+        Start-Process "https://git-scm.com/download/win" -Wait
+    }
+
+    # Clone vcpkg repository
+    git clone https://github.com/microsoft/vcpkg.git $vcpkgDir
+
+    # Bootstrap vcpkg
+    Write-Host "Bootstrapping vcpkg..."
+    Set-Location -Path $vcpkgDir
+    .\bootstrap-vcpkg.bat
+} else {
+    Write-Host "vcpkg is already installed." -ForegroundColor Yellow
+}
+
+# Step 2: Install SDL3 via vcpkg
+Write-Host "Installing SDL3 using vcpkg..." -ForegroundColor Green
+
+# Install SDL3 package
+Set-Location -Path $vcpkgDir
+.\vcpkg install sdl3
+
+# Step 3: Integrate vcpkg with Visual Studio (if applicable)
+Write-Host "Integrating vcpkg with Visual Studio..." -ForegroundColor Green
+.\vcpkg integrate install
+
+Write-Host "SDL3 has been installed successfully using vcpkg!" -ForegroundColor Cyan
+
+# End
+
